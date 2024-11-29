@@ -88,6 +88,25 @@ public class TournamentWithRecursion {
 
         return rightLeaves + leftLeaves;
     }
+    //i)
+    static TournamendNode addParticipant(final String name, final TournamendNode node){
+        if(node== null){
+            return new TournamendNode(null,null,name,0);
+        }
+        //wieder durch rekursion
+        if (getNumberofLeaves(node.right)>=getNumberofLeaves(node.left)){
+            //baum ganz nach links runterlaufen
+            //neuen namen links einfuegen
+            return new TournamendNode(addParticipant(name,node.left), node.right, node.winner, node.points);
+
+        }
+        else {
+            //neuen namen rechts einfuegen
+            //baum ganz nach rechts runterlaufen
+            return new TournamendNode(node.left,addParticipant(name,node.right), node.winner, node.points);
+        }
+
+    }
 
 
     //zum Testen
