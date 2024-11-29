@@ -47,7 +47,7 @@ public class TournamentWithRecursion {
 
     //e)
     static int rowOffset(final int level, final int height) {
-        if (powerOf2(height) / powerOf2(level) % powerOf2(height) / powerOf2(level) == 0) {
+        if (height>=level) {
             return powerOf2(height) / powerOf2(level);
         } else throw new IllegalArgumentException("height / level ergibt eine Kommazahl");
     }
