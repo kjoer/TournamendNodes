@@ -47,7 +47,7 @@ public class TournamentWithRecursion {
 
     //e)
     static int rowOffset(final int level, final int height) {
-        if (height>=level) {
+        if (height >= level) {
             return powerOf2(height) / powerOf2(level);
         } else throw new IllegalArgumentException("height / level ergibt eine Kommazahl");
     }
@@ -55,11 +55,11 @@ public class TournamentWithRecursion {
     // f)
     static int getHeight(final TournamendNode node) {
         if (node == null) {
-            return 0;
+            return -1;
         }
         int heightRight = getHeight(node.right);
         int heightLeft = getHeight(node.left);
-        return 1 + Math.max(heightLeft, heightRight);
+        return 1+Math.max(heightLeft, heightRight);
     }
 
     //g)
@@ -88,22 +88,25 @@ public class TournamentWithRecursion {
 
         return rightLeaves + leftLeaves;
     }
+
     //i)
-    static TournamendNode addParticipant(final String name, final TournamendNode node){
-        if(node== null){
-            return new TournamendNode(null,null,name,0);
+    static TournamendNode addParticipant(final String name, final TournamendNode node) {
+        if (node == null) {
+            return new TournamendNode(null, null, name, 0);
+        }
+        if(node.winner != null){
+            return new TournamendNode(node,new TournamendNode(null,null,name,0),name,0);
         }
         //wieder durch rekursion
-        if (getNumberofLeaves(node.right)>=getNumberofLeaves(node.left)){
+            if(countNames(node.right)>countNames(node.left)) {
             //baum ganz nach links runterlaufen
             //neuen namen links einfuegen
-            return new TournamendNode(addParticipant(name,node.left), node.right, node.winner, node.points);
+            return new TournamendNode(addParticipant(name, node.left), node.right, node.winner, node.points);
 
-        }
-        else {
+        } else { // participant nach unten ziehen und neuen daneben einfuegen und oben neuen zwischenknoten
             //neuen namen rechts einfuegen
             //baum ganz nach rechts runterlaufen
-            return new TournamendNode(node.left,addParticipant(name,node.right), node.winner, node.points);
+            return new TournamendNode(node.left, addParticipant(name, node.right), node.winner, node.points);
         }
 
     }
@@ -115,7 +118,10 @@ public class TournamentWithRecursion {
         TournamendNode testNodeRight = new TournamendNode(null, null, "yes", 4);
         TournamendNode testNodeLeft = new TournamendNode(null, null, "no", 3);
         TournamendNode testNode = new TournamendNode(testNodeRight, testNodeLeft, "K", 4);
-
         System.out.println(getNumberofLeaves(testNode));
+        System.out.println(getHeight(testNode));
+        System.out.println(getHeight(testNodeRight));
+
     }
 }
+
